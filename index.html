@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniZone - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-blue-50 to-white flex items-center justify-center min-h-screen">
+
+  <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
+    <div class="text-center mb-6">
+      <img src="./img/logo.jpg" alt="UniZone Logo" class="w-16 mx-auto mb-2">
+      <h1 class="text-2xl font-bold text-blue-700">UniZone Login</h1>
+      <p class="text-gray-600 text-sm">Access your campus portal</p>
+    </div>
+
+    <form id="loginForm" class="space-y-4">
+      <input type="text" id="username" placeholder="Username"
+             class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+      <input type="password" id="password" placeholder="Password"
+             class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+      <button type="submit"
+              class="w-full bg-blue-700 text-white p-2 rounded hover:bg-blue-800 transition">Login</button>
+    </form>
+
+    <p id="errorMsg" class="text-red-500 text-sm mt-3 text-center hidden">Invalid username or password.</p>
+  </div>
+
+  <script>
+    const users = [
+      { username: "admin", password: "1234", role: "admin" },
+      { username: "student", password: "1234", role: "student" },
+      { username: "teacher", password: "1234", role: "teacher" }
+    ];
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      const found = users.find(u => u.username === user && u.password === pass);
+
+      if (found) {
+        localStorage.setItem("role", found.role);
+        localStorage.setItem("username", found.username);
+        window.location.href = "main.html"; // Redirect to main page
+      } else {
+        document.getElementById('errorMsg').classList.remove('hidden');
+      }
+    });
+  </script>
+</div>
+</body>
+</html>
