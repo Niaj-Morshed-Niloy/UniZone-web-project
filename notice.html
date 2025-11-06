@@ -16,6 +16,8 @@
     </svg>
     Back
   </a>
+  
+  <div id="noticesContainer" class="space-y-4 p-4"></div>
 
   <!-- Header -->
   <h1 class="text-3xl font-bold text-blue-800 mb-6 text-center">📜 BITC Notice Board</h1>
@@ -73,6 +75,25 @@
   <footer class="text-center text-sm text-gray-500 mt-10">
     © 2025 Barisal Information Technology College (BITC) — All Rights Reserved
   </footer>
+
+  <script>
+async function loadNotices() {
+  const res = await fetch('http://localhost:5000/api/notices');
+  const data = await res.json();
+
+  const container = document.getElementById('noticesContainer');
+  container.innerHTML = data.map(n => `
+    <div class="p-4 mb-3 bg-white rounded shadow">
+      <h3 class="font-semibold text-lg">${n.title}</h3>
+      <p class="text-gray-700">${n.content}</p>
+      <p class="text-xs text-gray-500 mt-1">By: ${n.author || 'Admin'} | ${new Date(n.createdAt).toLocaleDateString()}</p>
+    </div>
+  `).join('');
+}
+
+window.addEventListener('load', loadNotices);
+</script>
+
 
 </body>
 </html>
