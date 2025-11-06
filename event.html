@@ -134,5 +134,31 @@
     *Government Holidays — Dates may change based on official decisions.
   </p>
 
+
+
+
+
+
+
+  <div id="eventsContainer" class="space-y-4 p-4"></div>
+
+<script>
+async function loadEvents() {
+  const res = await fetch('http://localhost:5000/api/events');
+  const data = await res.json();
+
+  const container = document.getElementById('eventsContainer');
+  container.innerHTML = data.map(e => `
+    <div class="p-4 mb-3 bg-white rounded shadow">
+      <h3 class="font-semibold text-lg">${e.title}</h3>
+      <p>${e.description}</p>
+      <p class="text-sm text-gray-500">📅 ${new Date(e.date).toLocaleDateString()} | 📍 ${e.location}</p>
+    </div>
+  `).join('');
+}
+
+window.addEventListener('load', loadEvents);
+</script>
+
 </body>
 </html>
